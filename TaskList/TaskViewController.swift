@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 final class TaskViewController: UIViewController {
+    
+    var delegate: TaskViewControllerDelegate!
+    
+    private let viewContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private lazy var taskTextField: UITextField = {
         let textField = UITextField()
@@ -22,7 +27,7 @@ final class TaskViewController: UIViewController {
             withTitle: "Save Task",
             andColor: UIColor(named: "MilkBlue") ?? .systemBlue,
             action: UIAction { [unowned self] _ in
-                dismiss(animated: true)
+                save()
             }
         )
     }()
@@ -42,7 +47,6 @@ final class TaskViewController: UIViewController {
         view.backgroundColor = .white
         setupSubViews(taskTextField, saveButton, cancelButton)
         setConstraints()
-       
     }
     
     private func setupSubViews(_ subviews: UIView...) {
@@ -83,5 +87,20 @@ final class TaskViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
+    }
+    
+    private func save() {
+        let task = Task(context: viewContext)
+        task.title = taskTextField.text
+        
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        delegate.reloadData()
+        dismiss(animated: true)
     }
 }
