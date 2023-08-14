@@ -13,6 +13,7 @@
 		1D37F2B12A77B62000E68357 /* TaskList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D37F2AF2A77B62000E68357 /* TaskList.xcdatamodeld */; };
 		1D37F2B32A77B62100E68357 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D37F2B22A77B62100E68357 /* Assets.xcassets */; };
 		1D37F2B62A77B62100E68357 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D37F2B42A77B62100E68357 /* LaunchScreen.storyboard */; };
+		1D68F41C2A8A39AA0004D6B9 /* AlertController + Extension .swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68F41B2A8A39AA0004D6B9 /* AlertController + Extension .swift */; };
 		1D780A972A83A112009D9028 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D780A962A83A112009D9028 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		1D37F2B22A77B62100E68357 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D37F2B52A77B62100E68357 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1D37F2B72A77B62100E68357 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D68F41B2A8A39AA0004D6B9 /* AlertController + Extension .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertController + Extension .swift"; sourceTree = "<group>"; };
 		1D780A962A83A112009D9028 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +60,7 @@
 		1D37F2A52A77B62000E68357 /* TaskList */ = {
 			isa = PBXGroup;
 			children = (
+				1D68F41A2A8A398F0004D6B9 /* Extensions */,
 				1D780A992A83A165009D9028 /* ViewControllers */,
 				1D780A9A2A83A172009D9028 /* Services */,
 				1D780A9C2A83A1B6009D9028 /* App */,
@@ -66,6 +69,14 @@
 				1D780A982A83A159009D9028 /* Core Data */,
 			);
 			path = TaskList;
+			sourceTree = "<group>";
+		};
+		1D68F41A2A8A398F0004D6B9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1D68F41B2A8A39AA0004D6B9 /* AlertController + Extension .swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		1D780A982A83A159009D9028 /* Core Data */ = {
@@ -193,6 +204,7 @@
 				1D780A972A83A112009D9028 /* StorageManager.swift in Sources */,
 				1D37F2A72A77B62000E68357 /* AppDelegate.swift in Sources */,
 				1D37F2A92A77B62000E68357 /* SceneDelegate.swift in Sources */,
+				1D68F41C2A8A39AA0004D6B9 /* AlertController + Extension .swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

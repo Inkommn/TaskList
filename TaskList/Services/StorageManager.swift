@@ -5,82 +5,65 @@
 //  Created by Shamkhan Mutuskhanov on 09.08.2023.
 //
 
-import Foundation
 import CoreData
 
 final class StorageManager {
     static let shared = StorageManager()
-    
-    var taskList: [Task] = []
-    
-    private init() {}
 
     // MARK: - Core Data stack
-    private var persistentContainer: NSPersistentContainer = {
+    private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "TaskList")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-        })
+        }
         return container
     }()
     
+    private let viewContext: NSManagedObjectContext
+    
+    private init() {
+        viewContext = persistentContainer.viewContext
+    }
+    
+    // MARK: - CRUD
+    func create(_ taskName: String, completion: (Task) -> Void) {
+        let task = Task(context: viewContext)
+        task.title = taskName
+        completion(task)
+        saveContext()
+    }
+    
+    func fetchData(completion: (Result<[Task], Error>) -> Void) {
+        let fetchRequest = Task.fetchRequest()
+        
+        do {
+            let tasks = try viewContext.fetch(fetchRequest)
+            completion(.success(tasks))
+        } catch let error {
+            completion(.failure(error))
+        }
+    }
+    
+    func update(_ task: Task, newName: String) {
+        task.title = newName
+        saveContext()
+    }
+    
+    func delete(_ task: Task) {
+        viewContext.delete(task)
+        saveContext()
+    }
+    
     // MARK: - Core Data Saving support
-     func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+    func saveContext() {
+        if viewContext.hasChanges {
             do {
-                try context.save()
+                try viewContext.save()
             } catch {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-    
-    // MARK: - Core Data
-     func fetchData() {
-        let fetchRequest = Task.fetchRequest()
-        let context = persistentContainer.viewContext
-        do {
-            taskList = try context.fetch(fetchRequest)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-    
-     func saveTask(_ taskName: String) {
-        let context = persistentContainer.viewContext
-        let task = Task(context: context)
-        task.title = taskName
-        taskList.append(task)
-
-        viewContextSave()
-    }
-    
-     func deleteTask(at indexPath: IndexPath) {
-        let taskToDelete = taskList[indexPath.row]
-        let context = persistentContainer.viewContext
-        context.delete(taskToDelete)
-        taskList.remove(at: indexPath.row)
-        
-        
-        viewContextSave()
-    }
-    
-     func updateTask(_ task: Task, with newTask: String) {
-        task.title = newTask
-        viewContextSave()
-    }
-    
-    private func viewContextSave() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error {
-                print(error.localizedDescription)
             }
         }
     }
